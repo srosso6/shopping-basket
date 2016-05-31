@@ -10,7 +10,7 @@ describe("Basket", function(){
 
   it("Can add item to basket", function() {
     basket.add(shop[0]);
-    assert.deepEqual([{item: "milk", price: 1}], basket.items);
+    assert.deepEqual([{item: "milk", price: 1, bogof: true}], basket.items);
   });
 
   it("Can remove item from basket", function() {
@@ -39,7 +39,21 @@ describe("Basket", function(){
     basket.add(shop[0]);
     basket.add(shop[1]);
     assert.equal(3.32, basket.price(true))
-
   });
+
+  it("Can calculate quantity of an item in basket", function() {
+    basket.remove(shop[0]);
+    basket.remove(shop[1]);
+    basket.add(shop[0]);
+    basket.add(shop[0]);
+    basket.add(shop[0]);
+    assert.equal(3, basket.countItem(shop[0]));
+  });
+
+  it("Can calculate price including bogof", function() {
+    // console.log(basket.items);
+    assert.equal(2, basket.price(false));
+  });
+
 
 });
